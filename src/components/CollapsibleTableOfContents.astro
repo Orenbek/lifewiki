@@ -1,0 +1,66 @@
+---
+import TableOfContents from '@astrojs/starlight/components/TableOfContents.astro';
+
+const { toc } = Astro.locals.starlightRoute;
+const label = Astro.locals.t('tableOfContents.onThisPage');
+---
+
+{
+	toc && (
+		<div class="wiki-toc">
+			<div class="toc-heading">
+				<span>{label}</span>
+				<button type="button" data-toc-toggle aria-expanded="false" aria-controls="wiki-right-sidebar" aria-label={'收起' + label} title={'收起' + label}>
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+						<path d="m9 6 6 6-6 6" />
+					</svg>
+				</button>
+			</div>
+			<TableOfContents />
+		</div>
+	)
+}
+
+<style>
+	.toc-heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+		color: var(--sl-color-white);
+		font-weight: 600;
+	}
+	button {
+		display: grid;
+		place-items: center;
+		flex-shrink: 0;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		border: 1px solid var(--sl-color-text-accent);
+		border-radius: 0.25rem;
+		color: var(--sl-color-text-accent);
+		background: transparent;
+		cursor: pointer;
+	}
+	button:hover {
+		background: var(--sl-color-gray-6);
+	}
+	button:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 2px;
+	}
+	/* Keep the native navigation label accessible without repeating the visible title. */
+	.wiki-toc :global(#starlight__on-this-page) {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

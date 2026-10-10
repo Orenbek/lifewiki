@@ -20,12 +20,40 @@
 
 ## 网站
 
-仓库包含 Astro 与 Starlight 初始站点。`src/content/docs/` 当前仍是示例内容，尚未发布或同步 `wikis/`。知识维护只写 `wikis/`，站点接入是后续独立工作。
+Astro 与 Starlight 直接读取 `wikis/` 中的 `.md` 和 `.mdx`。文章只维护这一份；`src/` 保存网站配置、组件和发布适配。
+
+- `src/content.config.ts` 定义文章加载和元数据校验；`astro.config.mjs` 配置网站展示。
+- 根 `wikis/README.md` 对应网站首页，主题下的 `README.md` 对应该主题入口。索引仍使用普通 Markdown，以首个 H1 作为标题。
+- Wiki 中继续使用相对文件链接，例如 `./ideas/README.md`、`./01-introduction.md#背景`，发布时转换为网页地址。目标页面必须存在；开发时输出断链诊断，构建时遇到断链或重复网址会失败。
+- 下划线或点号开头的文件和目录不发布，包括 `_meta/`。指向这些文件或 Wiki 外文件的 Markdown 链接在网站中显示为普通文字；仓库里的原始链接保留。
+- 普通文章优先使用 `.md`。需要 Astro 组件时使用 `.mdx`，通过 `@components/` 导入 `src/components/` 下的组件。
+- 侧栏根据实际目录和索引标题生成；页面可用 Starlight 的 `sidebar.order`、`sidebar.label` 和 `sidebar.hidden` 调整导航。文件路径决定网址，移动或重编号页面时同步修复引用。
+
+例如，在 MDX 页面中引用组件：
+
+```mdx
+---
+title: 我如何理解反馈
+created: "2026-10-10"
+updated: "2026-10-10"
+---
+
+import ThoughtTimeline from '@components/ThoughtTimeline.astro';
+
+先用正文讲清楚这里的理解。
+
+<ThoughtTimeline />
+```
+
+上面的组件名仅为写法示例，使用前需创建对应组件。Markdown 链接和 MDX 中静态 `<a href="…">` 会自动转换；组件属性或 JavaScript 表达式生成的链接使用网页地址。更新时间默认来自文章的 `updated` 字段，表示内容编辑时间。
 
 安装依赖后，在仓库根目录使用以下命令：
 
 | 命令 | 用途 |
 | --- | --- |
-| `pnpm dev` | 启动开发站点 |
-| `pnpm build` | 构建现有站点 |
+| `pnpm dev --background` | 在后台启动开发站点 |
+| `pnpm astro dev stop` | 停止后台开发站点 |
+| `pnpm check` | 同步内容并检查 TypeScript |
+| `pnpm test` | 在临时项目中验证发布规则和错误输入 |
+| `pnpm build` | 校验链接并构建 Wiki 网站 |
 | `pnpm preview` | 预览构建结果 |

@@ -1,0 +1,6 @@
+---
+import PageTitle from '@astrojs/starlight/components/PageTitle.astro';
+const { bodyHasTitle } = Astro.locals.starlightRoute.entry.data;
+---
+
+{bodyHasTitle ? <span id="_top" aria-hidden="true" /> : <PageTitle />}
