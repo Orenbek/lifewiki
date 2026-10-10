@@ -58,3 +58,11 @@ import ThoughtTimeline from '@components/ThoughtTimeline.astro';
 | `pnpm test` | 在临时项目中验证发布规则和错误输入 |
 | `pnpm build` | 校验链接并构建 Wiki 网站 |
 | `pnpm preview` | 预览构建结果 |
+
+## 部署
+
+Cloudflare Pages 项目 `lifewiki` 连接 GitHub 仓库 `Orenbek/lifewiki`，生产分支为 `master`。推送后自动构建，构建命令为 `pnpm build`，输出目录为 `dist`，根目录使用仓库根目录。
+
+Node 版本由 `.node-version` 指定；pnpm 版本由 `package.json` 的 `packageManager` 指定，Pages 的生产和预览环境同时设置 `PNPM_VERSION=11.16.0`。
+
+正式地址为 `https://wiki.hyperscale-it.ai`，在 Pages 的“自定义域”中关联；`astro.config.mjs` 中的 `site` 保持与正式地址一致。
