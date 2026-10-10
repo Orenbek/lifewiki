@@ -41,6 +41,22 @@ Split a page when a section addresses an independently useful question, serves a
 
 Make every substantive page discoverable from the nearest useful README.
 
+## Static Assets
+
+Store page-owned images and other static attachments in an `assets/` directory beside the Markdown file. Reference images with source-relative Markdown paths, for example `![Meaningful image description](./assets/example.png)`. Use descriptive lowercase kebab-case filenames.
+
+```text
+topic/
+├── README.md
+├── local-images.md
+└── assets/
+    └── toc-button.png
+```
+
+When several pages share a directory, use `assets/<page-stem>/` if needed to distinguish their attachments. Reuse genuinely shared assets from the nearest common topic's `assets/` directory through relative paths. Do not duplicate page assets into `public/`; reserve website-level resources for the presentation layer.
+
+Keep assets with their owning content when moving pages, and update all affected references. Asset directories contain attachments, not Wiki pages, so they do not need README indexes or count toward the four-level topic-directory limit. Check that local files exist and that image paths render correctly in the website; non-image attachments may require separate publication support and must be verified before promising a download link.
+
 ## Naming
 
 - Use `README.md` for directory indexes.
@@ -64,7 +80,7 @@ When adding a chapter, decide whether it belongs in the stable sequence or can r
 
 ## README Indexes
 
-Write README indexes as plain Markdown without frontmatter. State the scope, link only existing content, and explain each link's contribution. A topic README may include a concise synthesis and optional reading path using the `personal-wiki-editor` skill for topic synthesis. Keep substantial arguments in their primary pages. Omit empty sections. Link the constitution from `wikis/README.md`.
+Reserve README.md for directory indexes, not standalone articles or example pages. Put substantive content in a named .md or .mdx file with frontmatter and link it from the index. Write README indexes as plain Markdown without frontmatter. State the scope, link only existing content, and explain each link's contribution. A topic README may include a concise synthesis and optional reading path using the `personal-wiki-editor` skill for topic synthesis. Keep substantial arguments in their primary pages. Omit empty sections. Link the constitution from `wikis/README.md`.
 
 Give indexes a normal Markdown H1 with a Chinese display title. Do not introduce special heading delimiters.
 

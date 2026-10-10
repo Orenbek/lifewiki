@@ -10,6 +10,32 @@ Keep separate pages for distinct domain perspectives. Cross-link them instead of
 
 Place a cross-cutting principle in the most stable authoritative page and link domain-specific pages to it. Add a cross-domain index only when multiple existing pages need shared navigation.
 
+## Markdown, MDX, and Components
+
+Use `.md` for ordinary prose. Use `.mdx` when components improve the explanation, such as tabs for alternatives, steps for a procedure, cards for navigation, or a custom visualization. MDX is an allowed authoring format, not an exception requiring approval. Keep the central explanation in readable prose and use components for a clear purpose.
+
+Import built-in content components from `@astrojs/starlight/components`, for example `Aside`, `Tabs`, `TabItem`, `Steps`, `Card`, and `CardGrid`. Check the installed version and the [Starlight component documentation](https://starlight.astro.build/components/using-components/) for supported props and usage. Prefer built-in components when they fit; store custom components in `src/components/` and import them through `@components/`.
+
+```mdx
+---
+title: "如何阅读这篇文章"
+created: "2026-10-10"
+updated: "2026-10-10"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+# 如何阅读这篇文章
+
+先阅读正文中的说明，再按需要查看补充材料。
+
+<Aside type="note" title="阅读提示">
+  这里放与当前段落直接相关的补充说明。
+</Aside>
+```
+
+MDX pages follow the same placement, frontmatter, asset, and index rules as Markdown pages. Keep source-relative `.md` / `.mdx` links in Markdown syntax; URLs supplied through component props or JavaScript expressions must use published website paths. When changing a page extension, repair referring links. Build the site and preview affected pages when introducing or changing components; check that they remain readable on mobile.
+
 ## Choose A Template
 
 Before creating or substantially rewriting a page, inspect `wikis/_meta/templates/` for a template that matches its purpose. Use it when available; otherwise follow the general authoring rules.

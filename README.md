@@ -26,6 +26,7 @@ Astro 与 Starlight 直接读取 `wikis/` 中的 `.md` 和 `.mdx`。文章只维
 - 根 `wikis/README.md` 对应网站首页，主题下的 `README.md` 对应该主题入口。索引仍使用普通 Markdown，以首个 H1 作为标题。
 - Wiki 中继续使用相对文件链接，例如 `./ideas/README.md`、`./01-introduction.md#背景`，发布时转换为网页地址。目标页面必须存在；开发时输出断链诊断，构建时遇到断链或重复网址会失败。
 - 下划线或点号开头的文件和目录不发布，包括 `_meta/`。指向这些文件或 Wiki 外文件的 Markdown 链接在网站中显示为普通文字；仓库里的原始链接保留。
+- 页面图片放在 Markdown 所在目录的 `assets/` 下，用 `![图片说明](./assets/example.png)` 引用；构建时由 Astro 处理，无需复制到 `public/`。
 - 普通文章优先使用 `.md`。需要 Astro 组件时使用 `.mdx`，通过 `@components/` 导入 `src/components/` 下的组件。
 - 侧栏根据实际目录和索引标题生成；页面可用 Starlight 的 `sidebar.order`、`sidebar.label` 和 `sidebar.hidden` 调整导航。文件路径决定网址，移动或重编号页面时同步修复引用。
 

@@ -23,9 +23,9 @@ Call out a conflict instead of silently overriding a higher-priority rule.
 Read each reference completely when its subject is relevant:
 
 - [governance.md](references/governance.md) — decide what belongs in the Wiki, where generic rules live, and how to avoid speculative governance.
-- [directory-structure.md](references/directory-structure.md) — place pages, name paths, structure domains, and maintain README indexes.
+- [directory-structure.md](references/directory-structure.md) — place pages, name paths, structure domains, place static assets, and maintain README indexes.
 - [frontmatter.md](references/frontmatter.md) — apply and maintain the frontmatter contract.
-- [authoring.md](references/authoring.md) — create, update, merge, and cross-link Wiki content.
+- [authoring.md](references/authoring.md) — choose Markdown or MDX, use components, and create, update, merge, or cross-link Wiki content.
 - [retrieval.md](references/retrieval.md) — locate and read Wiki knowledge without modifying files.
 - [maintenance.md](references/maintenance.md) — audit, move, remove, deduplicate, and repair Wiki content.
 
@@ -37,7 +37,7 @@ Read each reference completely when its subject is relevant:
 4. Search before writing. Prefer updating an existing authoritative page over creating a competing page.
    Before substantive writes, follow the editor's discussion and alignment rules. An explicit request to record supplied text already authorizes faithful capture. Pure retrieval stays read-only.
 5. Keep changes within the requested domain and the indexes or links directly affected by the change.
-6. Validate applicable frontmatter, paths, README entries, and relative links before finishing.
+6. Validate applicable frontmatter, paths, README entries, relative links, and local asset references before finishing.
 
 ## Initialize From Templates
 
