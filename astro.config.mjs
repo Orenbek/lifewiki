@@ -6,6 +6,7 @@ import { wikiMarkdownLinks, wikiHtmlLinks } from './src/wiki/markdown';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://wiki.hyperscale-it.ai',
 	trailingSlash: 'always',
 	markdown: {
 		processor: satteri({
