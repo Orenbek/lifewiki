@@ -1,3 +1,12 @@
 :root {
 	--sl-sidebar-width: 21.25rem;
 }
+
+main {
+	--sl-text-h1: clamp(1.75rem, 1.45rem + 1vw, 2.125rem);
+	--sl-text-h2: 1.375rem;
+	--sl-text-h3: 1.1875rem;
+	--sl-text-h4: 1.0625rem;
+	--sl-text-h5: 1rem;
+	--sl-text-h6: 0.9375rem;
+}

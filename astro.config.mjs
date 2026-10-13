@@ -27,6 +27,7 @@ export default defineConfig({
 			routeMiddleware: './src/wiki/route-middleware.ts',
 			components: {
 				PageTitle: './src/components/WikiPageTitle.astro',
+				MarkdownContent: './src/components/WikiMarkdownContent.astro',
 				TableOfContents: './src/components/CollapsibleTableOfContents.astro',
 				TwoColumnContent: './src/components/WikiTwoColumnContent.astro',
 			},

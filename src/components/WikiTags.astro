@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+
+const tags = [...new Set(Astro.locals.starlightRoute.entry.data.tags ?? [])];
+const pages = tags.length ? await getCollection('docs') : [];
+const allTags = [...new Set(pages.flatMap(({ data }) => data.tags ?? []))].sort();
+// Assign each tag its own hue, shared by every page that uses it.
+const hues = new Map(allTags.map((tag, index) => [tag, (210 + index * 137.508) % 360]));
+---
+
+{
+	tags.length > 0 && (
+		<ul class="wiki-tags not-content" aria-label="文章标签" role="list">
+			{tags.map((tag) => <li class="wiki-tag" style={`--tag-hue: ${hues.get(tag)}`}>{tag}</li>)}
+		</ul>
+	)
+}
+
+<style>
+	.wiki-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0.75rem 0 1.5rem;
+		padding: 0;
+		list-style: none;
+	}
+	.wiki-tag {
+		margin: 0;
+		padding: 0.2rem 0.65rem;
+		border: 1px solid hsl(var(--tag-hue) 45% 35%);
+		border-radius: 999px;
+		background: hsl(var(--tag-hue) 55% 18%);
+		color: hsl(var(--tag-hue) 72% 82%);
+		font-size: 0.8125rem;
+		line-height: 1.5;
+		overflow-wrap: anywhere;
+	}
+	:global([data-theme='light']) .wiki-tag {
+		border-color: hsl(var(--tag-hue) 55% 82%);
+		background: hsl(var(--tag-hue) 70% 96%);
+		color: hsl(var(--tag-hue) 65% 30%);
+	}
+</style>

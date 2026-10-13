@@ -1,6 +1,7 @@
 ---
 import PageTitle from '@astrojs/starlight/components/PageTitle.astro';
+import WikiTags from './WikiTags.astro';
 const { bodyHasTitle } = Astro.locals.starlightRoute.entry.data;
 ---
 
-{bodyHasTitle ? <span id="_top" aria-hidden="true" /> : <PageTitle />}
+{bodyHasTitle ? <span id="_top" aria-hidden="true" /> : <><PageTitle /><WikiTags /></>}

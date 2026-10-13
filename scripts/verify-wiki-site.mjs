@@ -26,6 +26,9 @@ const article = `---
 title: 如何理解反馈
 created: '2026-10-09'
 updated: '2026-10-10'
+tags:
+  - feedback
+  - learning
 sidebar:
   order: 1
   label: 反馈
@@ -57,6 +60,8 @@ try {
 	write('src/components/FixtureNote.astro', '<aside data-fixture-component="rendered">组件正文</aside>');
 	write('wikis/growth/diagram.mdx', `---
 title: 反馈图示
+tags:
+  - feedback
 ---
 import Note from '@components/FixtureNote.astro';
 
@@ -75,7 +80,7 @@ import Note from '@components/FixtureNote.astro';
 	write('wikis/growth/_scratch.md', '# 不公开\n');
 	write('wikis/growth/hidden.md', '---\ntitle: 隐藏导航\nsidebar:\n  hidden: true\n---\n正文\n');
 	write('wikis/growth/draft.md', '---\ntitle: 草稿\ndraft: true\n---\n正文\n');
-	write('wikis/conversion.md', '---\ntitle: 格式转换\n---\n转换后正文\n');
+	write('wikis/conversion.md', '---\ntitle: 格式转换\ntags: [feedback]\n---\n转换后正文\n');
 	build();
 	assert.match(html(), /<html[^>]*lang="zh-CN"/);
 	assert.match(html(), /href="\/growth\/"/);
@@ -89,10 +94,19 @@ import Note from '@components/FixtureNote.astro';
 	assert.match(feedback, /href="\/growth\/#成长"/);
 	assert.match(feedback, /starlight-aside--note/);
 	assert.match(feedback, /datetime="2026-10-10/);
+	assert.match(feedback, /<\/div>\s*<ul[^>]*class="wiki-tags/);
+	const tagHues = [...feedback.matchAll(/<li[^>]*style="--tag-hue: ([^"]+)"/g)].map((match) => match[1]);
+	assert.equal(tagHues.length, 2);
+	assert.equal(new Set(tagHues).size, 2);
+	assert.doesNotMatch(html(), /<ul[^>]*class="wiki-tags/);
+	assert.match(html('conversion'), /<\/h1>\s*<ul[^>]*class="wiki-tags/);
+	assert.match(html('conversion'), new RegExp(`--tag-hue: ${tagHues[0]}`));
 	const diagram = html('growth/diagram');
 	assert.match(diagram, /data-fixture-component="rendered"/);
 	assert.match(diagram, /href="\/growth\/#成长"/);
 	assert.equal((diagram.match(/<h1\b/g) ?? []).length, 1);
+	assert.match(diagram, /<\/div>\s*<ul[^>]*class="wiki-tags/);
+	assert.match(diagram, new RegExp(`--tag-hue: ${tagHues[0]}`));
 	for (const page of [html(), feedback, diagram]) {
 		assert.doesNotMatch(page, /href="[^\"]*(?:_meta|skills|\.md(?:x)?(?:[?#"]))/);
 		assert.doesNotMatch(page, /href="\/growth\/(?:hidden|draft)\//);

@@ -1,0 +1,22 @@
+---
+import MarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro';
+import WikiTags from './WikiTags.astro';
+
+const { bodyHasTitle, tags } = Astro.locals.starlightRoute.entry.data;
+const content = bodyHasTitle && tags?.length ? await Astro.slots.render('default') : '';
+// Keep Starlight's heading anchor wrapper intact when inserting the tags.
+const heading = /<div\b[^>]*class="sl-heading-wrapper level-h1"[^>]*>[\s\S]*?<\/div>|<h1\b[^>]*>[\s\S]*?<\/h1>/.exec(content);
+const titleEnd = heading ? heading.index + heading[0].length : 0;
+---
+
+<MarkdownContent>
+	{
+		titleEnd > 0 ? (
+			<>
+				<Fragment set:html={content.slice(0, titleEnd)} />
+				<WikiTags />
+				<Fragment set:html={content.slice(titleEnd)} />
+			</>
+		) : <slot />
+	}
+</MarkdownContent>
